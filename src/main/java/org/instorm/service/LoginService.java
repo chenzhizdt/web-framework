@@ -1,5 +1,7 @@
 package org.instorm.service;
 
+import org.instorm.model.User;
+
 public interface LoginService {
-	public String login(String username, String password);
+	public User login(String username, String password);
 }

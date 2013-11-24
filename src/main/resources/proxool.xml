@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<something-else-entirely>
+	<proxool>
+		<alias>oracle</alias>
+		<driver-url>
+			jdbc:oracle:thin:@192.168.160.1:1521:ORCL
+		</driver-url>
+		<driver-class>oracle.jdbc.driver.OracleDriver</driver-class>
+		<driver-properties>
+			<property name="user" value="pmtools" />
+			<property name="password" value="pmtools" />
+		</driver-properties>
+		<house-keeping-sleep-time>90000</house-keeping-sleep-time>
+		<maximum-new-connections>1</maximum-new-connections>
+		<prototype-count>10</prototype-count>
+		<maximum-connection-count>50</maximum-connection-count>
+		<minimum-connection-count>10</minimum-connection-count>
+		<maximum-active-time>900000</maximum-active-time>
+		<maximum-connection-lifetime>14400000</maximum-connection-lifetime>
+		<test-before-use>true</test-before-use>
+		<house-keeping-test-sql>select sysdate() from dual
+		</house-keeping-test-sql>
+	</proxool>
+</something-else-entirely>

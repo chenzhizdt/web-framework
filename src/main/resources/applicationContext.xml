@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:p="http://www.springframework.org/schema/p" 
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	   					   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	   					   http://www.springframework.org/schema/tx
+	   					   http://www.springframework.org/schema/tx/spring-tx.xsd
+	   					   http://www.springframework.org/schema/aop
+	   					   http://www.springframework.org/schema/aop/spring-aop.xsd
+	   					   ">
+
+		
+	<!-- 定义事务处理类，不同的数据访问方式，事务处理类不同
+		比如：Hibernate操作的HibernateTransactionManager，JDBC操作的使用DataSourceTransactionManager
+	 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- 定义事务通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 定义方法的过滤规则 -->
+		<tx:attributes>
+			<!-- 所有方法都使用事务 -->
+			<tx:method name="*" propagation="REQUIRED"/>
+			<!-- 定义所有get开头的方法都是只读的 -->
+			<tx:method name="get*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 定义AOP配置 -->
+	<aop:config>
+		<!-- 定义一个切入点 -->
+		<aop:pointcut expression="execution (* org.instorm.service..*.*(..))" id="services"/>
+		<!-- 对切入点和事务的通知，进行适配 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="services"/>
+	</aop:config>
+
+	<bean id="dataSource"
+			class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jdbc/pmtools" />
+		<property name="resourceRef" value="true" />
+	</bean>
+
+	<!-- 读写lob -->
+	<bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="true" />
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 
+		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+		 -->
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=org.hibernate.dialect.Oracle10gDialect
+				hibernate.show_sql=true
+				hibernate.format_sql=true
+			</value>
+		</property>
+		<property name="mappingDirectoryLocations">
+			<list>
+				<value>classpath:/org/instorm/model</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="baseDAO" class="org.instorm.dao.impl.BaseDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="loginService" class="org.instorm.service.impl.LoginServiceImpl">
+		<property name="baseDAO" ref="baseDAO"></property>
+	</bean>
+</beans>
