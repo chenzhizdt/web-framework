@@ -34,9 +34,9 @@ public class Application {
 		try {
 			String result = "";
 			String sql = "select * from t_pm_user"; 
-			String url ="jdbc:oracle:thin:@instorm-desktop:1521:orcl";
-			String username = "pmtools"; // 用户名
-			String password = "pmtools"; //密码
+			String url ="jdbc:oracle:thin:@192.168.0.3:1521:orcl";
+			String username = "scott"; // 用户名
+			String password = "tiger"; //密码
 			Class.forName("oracle.jdbc.OracleDriver").newInstance();
 			System.out.println(321);
 			Connection conn =DriverManager.getConnection(url, username, password);
