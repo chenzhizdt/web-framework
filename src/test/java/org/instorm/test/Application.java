@@ -38,29 +38,23 @@ public class Application {
 			String username = "scott"; // 用户名
 			String password = "tiger"; //密码
 			Class.forName("oracle.jdbc.OracleDriver").newInstance();
-			System.out.println(321);
 			Connection conn =DriverManager.getConnection(url, username, password);
-			System.out.println(123);
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while ( rs.next() )
 			{
-				result += "\n 第一个字段内容：" +rs.getString(1) + "<BR>";
+				result += "\n 第一个字段内容：" +rs.getString(0) + "<BR>";
 			}
 			rs.close(); // 关闭结果集
 			stmt.close(); // 关闭执行语句对象
 			conn.close(); // 关闭与数据库的连接
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

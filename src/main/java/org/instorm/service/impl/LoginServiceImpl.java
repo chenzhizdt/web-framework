@@ -20,7 +20,6 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public User login(String username, String password) {
-		// TODO Auto-generated method stub
 		String hql = "select User as m where m.username=? and m.password=?";
 		Object[] values = new Object[2];
 		values[0] = username;

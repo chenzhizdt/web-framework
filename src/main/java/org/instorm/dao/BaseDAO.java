@@ -8,7 +8,7 @@ public interface BaseDAO<T,ID extends Serializable> {
      * 保存实体
      * @param entity
      */
-	public void save(T entity);
+	public ID save(T entity);
 	/**
 	 * 删除实体
 	 * @param entity
@@ -50,7 +50,7 @@ public interface BaseDAO<T,ID extends Serializable> {
      * @param values
      * @return
      */
-    public List find(String hql, Object... values);
+    public List<?> find(String hql, Object... values);
     /**
      * 分页方法,参数pagesize表示每页显示数据量，startpage表示数据库从指定开始数据读取到指定位置，
      * 例：int startpage=(当前页数-1) * pagesize;
