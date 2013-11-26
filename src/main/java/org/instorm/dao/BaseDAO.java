@@ -57,11 +57,11 @@ public interface BaseDAO<T,ID extends Serializable> {
      * 当前页数为1,pagesize为3，读取数据库0到2数据
      * 当前页数为2,pagesize为3，读取数据库3到5数据
 	 */
-    public List<T> find(final String hql,final int pagesize,final int startpage,final Object... values);
+    public List<T> find(final String hql,final int pageSize,final int startPage,final Object... values);
     /**
      * 批量删除更改实体
      * @param hql
      * @return
      */
-    public int exeupdatehql(final String hql);
+    public int executeUpdate(final String hql);
 }  

@@ -3,6 +3,7 @@ package org.instorm.dao.impl;
 import java.io.Serializable;   
 import java.util.List;    
 
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.instorm.dao.BaseDAO;
 
@@ -42,23 +43,34 @@ public class BaseDAOImpl<T,ID extends Serializable> implements BaseDAO<T,ID> {
         //System.out.println(name);
 //        return this.getHibernateTemplate().find("from "+name);
     	// TODO
-        return null;
+		String hql = "from ";
+		Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+		List<T> list=query.list();
+		return list;
     }   
   
      public ID save(T entity) { 
 //         this.getHibernateTemplate().save(entity);
-    	 // TODO
-    	 return null;
+    	 // TODO 测试 添加数据校验与异常处理
+    	 return (ID) this.sessionFactory.getCurrentSession().save(entity);
     }   
     public void update(T entity) {   
 //        this.getHibernateTemplate().update(entity);
-    	// TODO
+    	// TODO 测试 添加数据校验与异常处理
+    	this.sessionFactory.getCurrentSession().update(entity);
     }   
  
     public List<?> find(String hql, Object... values) {   
 //        return this.getHibernateTemplate().find(hql,values);
-    	// TODO
-    	return null;
+    	// TODO 测试 添加数据校验与异常处理
+    	Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+		if(values != null && values.length > 0){
+			for(int i = 0; i < values.length;i++){
+				query.setParameter(i, values[i]);
+	    	}
+		}
+		List<?> list=query.list();
+		return list;
     }
 
 	public List<T> findBySql(String hql) {
@@ -68,7 +80,7 @@ public class BaseDAOImpl<T,ID extends Serializable> implements BaseDAO<T,ID> {
 		return null;
 	}   
 	//执行批量更新(修改删除)
-	public int exeupdatehql(final String hql){
+	public int executeUpdate(final String hql){
 //	    int row=0;
 //	    row=(Integer)getHibernateTemplate().execute(new HibernateCallback(){
 //	       public Object doInHibernate(Session session)throws HibernateException, SQLException {
@@ -78,15 +90,18 @@ public class BaseDAOImpl<T,ID extends Serializable> implements BaseDAO<T,ID> {
 //	       }
 //	    });
 //	    return row;
-		// TODO
-		return 0;
+		// TODO 测试 添加数据校验与异常处理
+		int row = 0;
+		Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+		row = query.executeUpdate();
+		return row;
 	}
 	/*分页方法,参数pagesize表示每页显示数据量，startpage表示数据库从指定开始数据读取到指定位置，
 	* 例：int startpage=(当前页数-1) * pagesize;
 	* 当前页数为1,pagesize为3，读取数据库0到2数据
 	* 当前页数为2,pagesize为3，读取数据库3到5数据
 	* */
-	public List<T> find(final String hql, final int pagesize, final int startpage,final Object... values) {
+	public List<T> find(final String hql, final int pageSize, final int startPage,final Object... values) {
 //		return getHibernateTemplate().executeFind(new HibernateCallback(){
 //		    public Object doInHibernate(Session session)throws HibernateException, SQLException {
 //		      Query query=session.createQuery(hql);
@@ -102,7 +117,16 @@ public class BaseDAOImpl<T,ID extends Serializable> implements BaseDAO<T,ID> {
 //		    }
 //		 });
 		// TODO
-		return null;
+		Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
+		if(values != null && values.length > 0){
+			for(int i = 0; i < values.length;i++){
+				query.setParameter(i, values[i]);
+	    	}
+		}
+		query.setFirstResult((startPage-1) * pageSize);
+		query.setMaxResults(pageSize);
+		List<T> list=query.list();
+		return list;
 	}
 }  
 
