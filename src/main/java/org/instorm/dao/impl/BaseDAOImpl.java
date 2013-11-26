@@ -121,7 +121,7 @@ public class BaseDAOImpl<T,ID extends Serializable> implements BaseDAO<T,ID> {
 //		      return list;
 //		    }
 //		 });
-		// TODO
+		// TODO 测试 添加数据校验与异常处理
 		Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
 		if(values != null && values.length > 0){
 			for(int i = 0; i < values.length;i++){

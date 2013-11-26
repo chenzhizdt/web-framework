@@ -2,7 +2,7 @@ package org.instorm.dao;
 
 import java.io.Serializable;   
 import java.util.List;   
-	// TODO 参考HibernateTemplate类设计接口
+	// TODO 参考HibernateTemplate类重新设计该接口
 public interface BaseDAO<T,ID extends Serializable> {   
     /**
      * 保存实体
