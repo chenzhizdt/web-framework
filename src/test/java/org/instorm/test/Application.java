@@ -34,16 +34,16 @@ public class Application {
 		try {
 			String result = "";
 			String sql = "select * from t_pm_user"; 
-			String url ="jdbc:oracle:thin:@192.168.0.3:1521:orcl";
-			String username = "scott"; // 用户名
-			String password = "tiger"; //密码
+			String url ="jdbc:oracle:thin:@128.128.128.254:1521:utf8";
+			String username = "pmtools"; // 用户名
+			String password = "pmtools"; //密码
 			Class.forName("oracle.jdbc.OracleDriver").newInstance();
 			Connection conn =DriverManager.getConnection(url, username, password);
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while ( rs.next() )
 			{
-				result += "\n 第一个字段内容：" +rs.getString(0) + "<BR>";
+				result += "\n 第一个字段内容：" +rs.getString(1) + "<BR>";
 			}
 			rs.close(); // 关闭结果集
 			stmt.close(); // 关闭执行语句对象

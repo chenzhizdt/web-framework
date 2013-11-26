@@ -31,4 +31,9 @@ public class LoginServiceImpl implements LoginService {
 		return null;
 	}
 
+	@Override
+	public User findById(String id) {
+		return (User) baseDAO.findById(User.class, id);
+	}
+
 }
