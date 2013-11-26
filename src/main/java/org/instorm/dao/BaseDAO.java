@@ -43,7 +43,7 @@ public interface BaseDAO<T,ID extends Serializable> {
      * @param sql
      * @return
      */
-    public List<T>findBySql(String sql);
+    public List<?>findBySql(String sql);
     /**
      * 根据hql语句和条件值查询
      * @param hql

@@ -3,7 +3,9 @@ package org.instorm.dao.impl;
 import java.io.Serializable;   
 import java.util.List;    
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.instorm.dao.BaseDAO;
 
@@ -23,18 +25,20 @@ public class BaseDAOImpl<T,ID extends Serializable> implements BaseDAO<T,ID> {
 
 	public void delete(T entity) {   
 //        this.getHibernateTemplate().delete(entity);
-		// TODO
+		// TODO 测试 添加数据校验与异常处理
+		this.sessionFactory.getCurrentSession().delete(entity);
     }   
   
      public void deleteById(Class<T> entityClass, ID id) {
     	//System.out.println(id+" "+entityClass);
 //        delete(this.findById(entityClass, id));
-          // TODO 
+          // TODO 测试 添加数据校验与异常处理
+    	 delete(this.findById(entityClass, id));
     }   
   
      public T findById(Class<T> entityClass, ID id) {   
 //        return this.getHibernateTemplate().get(entityClass, id);
-    	 // TODO test
+    	 // TODO 测试 添加数据校验与异常处理
     	 return (T) this.sessionFactory.getCurrentSession().get(entityClass, id);
     }   
      
@@ -42,10 +46,9 @@ public class BaseDAOImpl<T,ID extends Serializable> implements BaseDAO<T,ID> {
 //        String name=entityClass.getName(); 
         //System.out.println(name);
 //        return this.getHibernateTemplate().find("from "+name);
-    	// TODO
-		String hql = "from ";
-		Query query = this.sessionFactory.getCurrentSession().createQuery(hql);
-		List<T> list=query.list();
+    	// TODO 测试 添加数据校验与异常处理
+		Criteria crit = this.sessionFactory.getCurrentSession().createCriteria(entityClass);
+		List<T> list=crit.list();
 		return list;
     }   
   
@@ -73,11 +76,13 @@ public class BaseDAOImpl<T,ID extends Serializable> implements BaseDAO<T,ID> {
 		return list;
     }
 
-	public List<T> findBySql(String hql) {
+	public List<?> findBySql(String sql) {
 //		List <T>list=this.getHibernateTemplate().find(hql);
 //		return list;
-		// TODO
-		return null;
+		// TODO 测试 添加数据校验与异常处理
+		SQLQuery sqlQuery = this.sessionFactory.getCurrentSession().createSQLQuery(sql);
+		List<?> list = sqlQuery.list();
+		return list;
 	}   
 	//执行批量更新(修改删除)
 	public int executeUpdate(final String hql){
