@@ -36,7 +36,7 @@ public class Application {
 			String sql = "select * from t_pm_user"; 
 			String url ="jdbc:oracle:thin:@128.128.128.254:1521:utf8";
 			String username = "pmtools"; // 用户名
-			String password = "pmtools"; //密码
+			String password = "pmtools"; //密码1
 			Class.forName("oracle.jdbc.OracleDriver").newInstance();
 			Connection conn =DriverManager.getConnection(url, username, password);
 			Statement stmt = conn.createStatement();
