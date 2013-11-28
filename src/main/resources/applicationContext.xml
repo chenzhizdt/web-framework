@@ -68,6 +68,9 @@
 	<bean id="baseDAO" class="org.instorm.dao.impl.BaseDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	<bean id="basicDAO" class="org.instorm.dao.impl.BasicDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 	<bean id="loginService" class="org.instorm.service.impl.LoginServiceImpl">
 		<property name="baseDAO" ref="baseDAO"></property>
 	</bean>
