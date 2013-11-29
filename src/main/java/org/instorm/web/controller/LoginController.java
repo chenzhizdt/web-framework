@@ -23,10 +23,10 @@ public class LoginController {
 			Model model,
 			HttpServletRequest request) {
 		if (username != null && password != null) {
-			User user = loginService.findById(username);
+			User user = loginService.login(username, password);
 			if (user != null) {
-				model.addAttribute("username", username);
-				model.addAttribute("password", password);
+				model.addAttribute("username", user.getUsername());
+				model.addAttribute("password", user.getPassword());
 				request.getSession().setAttribute("user", user);
 				return "welcome";
 			}

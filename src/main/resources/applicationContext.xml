@@ -72,6 +72,6 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="loginService" class="org.instorm.service.impl.LoginServiceImpl">
-		<property name="baseDAO" ref="baseDAO"></property>
+		<property name="basicDAO" ref="basicDAO"></property>
 	</bean>
 </beans>
