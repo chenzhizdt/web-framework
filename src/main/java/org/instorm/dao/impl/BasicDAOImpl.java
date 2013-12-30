@@ -103,7 +103,7 @@ public class BasicDAOImpl implements BasicDAO{
 
 	@Override
 	public List find(String queryString) {
-		return find(queryString, new Object[]{null});
+		return find(queryString, (Object[]) null);
 	}
 
 	@Override

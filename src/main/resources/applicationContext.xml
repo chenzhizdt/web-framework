@@ -74,4 +74,10 @@
 	<bean id="loginService" class="org.instorm.service.impl.LoginServiceImpl">
 		<property name="basicDAO" ref="basicDAO"></property>
 	</bean>
+	<bean id="userService" class="org.instorm.service.impl.UserServiceImpl">
+		<property name="basicDAO" ref="basicDAO"></property>
+	</bean>
+	<bean id="coupleService" class="org.instorm.service.impl.CoupleServiceImpl">
+		<property name="basicDAO" ref="basicDAO"></property>
+	</bean>
 </beans>
